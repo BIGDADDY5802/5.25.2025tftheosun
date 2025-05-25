@@ -1,16 +1,14 @@
-#1-backend.tf
+#2-vpc.tf
 
-# https://www.terraform.io/language/settings/backends/gcs
-terraform {
-  backend "gcs" {
-    bucket      = "backendformytfstate"
-    prefix      = "terraform/5252025"
-    credentials = "gcp-cw-project-453819-a130e8726b46.json"
-  }
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "~> 4.0"
-    }
-  }
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service
+
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network
+resource "google_compute_network" "cwglobal" {
+  name                            = "cwglobal"
+  routing_mode                    = "REGIONAL"
+  auto_create_subnetworks         = false
+  mtu                             = 1460
+  delete_default_routes_on_create = false
+
+ 
 }
